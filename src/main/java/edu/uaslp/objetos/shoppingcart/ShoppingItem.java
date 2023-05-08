@@ -13,6 +13,7 @@ public final class ShoppingItem {
         this.code = code;
         this.unitCostInCents = unitCostInCents;
     }
+    ShoppingItem() {}
 
     public String getName() {
         return name;
