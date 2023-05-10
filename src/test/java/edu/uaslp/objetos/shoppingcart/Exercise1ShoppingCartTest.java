@@ -80,7 +80,7 @@ public class Exercise1ShoppingCartTest {
         // Then:
         List<ShoppingItem> shoppingItems = shoppingCart.getItems();
 
-        assertThat(shoppingItems).containsExactly(item1, item1, item1);
+        assertThat(shoppingItems).containsExactly(item1, item2, item3);
         assertThat(totalCost).isEqualTo(103800);
         assertThat(distinctItemsCount).isEqualTo(1);
         assertThat(totalItemsCount).isEqualTo(3);

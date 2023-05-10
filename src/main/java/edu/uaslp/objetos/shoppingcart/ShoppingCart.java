@@ -14,6 +14,7 @@ public class ShoppingCart{
     }
 
     public void add(String code) throws ItemNotFoundException {
+        itemsCount=0;
         ShoppingItem item = catalog.getItem(code);
         if(item == null){
             String message = "Item with code "+code+" not found";
@@ -35,21 +36,11 @@ public class ShoppingCart{
     }
 
     public int getDistinctItemsCount() {
-        int contItem, limit = 1;
-        ArrayList<ShoppingItem> auxArray = new ArrayList<>();
-        ShoppingItem auxItem = list.get(0);
-        auxArray.add(auxItem);
-        for(contItem = 0; contItem<itemsCount; contItem++) {
-            for (int contFor=0;contFor<limit;contFor++) {
-                System.out.println(auxArray.get(contFor).getCode()+"=="+auxItem.getCode());
-                if ((auxArray.get(contFor).getCode().equals(auxItem.getCode()))==false) {
-                    System.out.println(auxArray.get(contFor).getCode()+"!="+auxItem.getCode());
-                    auxArray.add(auxItem);
-                    limit++;
-                    distinctItemsCount++;
-                }
+        distinctItemsCount=0;
+        for(int cont=0;cont<itemsCount;cont++){
+            if(itemIsPresent(list.get(cont))){
+                distinctItemsCount++;
             }
-            auxItem = list.get(contItem);
         }
         return distinctItemsCount;
     }
@@ -62,21 +53,21 @@ public class ShoppingCart{
         return list;
     }
 
-    public java.util.List<ShoppingItem> getDistinctItems() {
-        int limit = 1;
-        ArrayList<ShoppingItem> auxArray = new ArrayList<>();
-        ShoppingItem auxItem = list.get(0);
-        auxArray.add(auxItem);
-        for(int contItem = 0; contItem<itemsCount; contItem++) {
-            for (int contFor=0;contFor<limit;contFor++) {
-                if ((auxArray.get(contFor).getCode().equals(auxItem.getCode()))==false) {
-                    auxArray.add(auxItem);
-                    limit++;
-                }
-            }
-            auxItem = list.get(contItem);
+    public boolean itemIsPresent(ShoppingItem item){
+        for(int cont=0;cont<itemsCount;cont++){
+            if(list.get(cont).getCode().equals(item.getCode())){return true;}
         }
-        return auxArray;
+        return false;
+    }
+
+    public java.util.List<ShoppingItem> getDistinctItems() {
+        ArrayList<ShoppingItem> distinctArray = new ArrayList<>();
+        for(int cont=0;cont<itemsCount;cont++){
+            if(itemIsPresent(list.get(cont))){
+                distinctArray.add(list.get(cont));
+            }
+        }
+        return distinctArray;
     }
 }
 
