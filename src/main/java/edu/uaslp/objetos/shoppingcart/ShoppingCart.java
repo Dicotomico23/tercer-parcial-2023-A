@@ -1,73 +1,83 @@
 package edu.uaslp.objetos.shoppingcart;
 
 import edu.uaslp.objetos.shoppingcart.exceptions.ItemNotFoundException;
-
-import java.util.LinkedList;
-
-public class ShoppingCart implements List{
+import java.util.ArrayList;
+public class ShoppingCart{
     private ShoppingItemCatalog catalog;
     private int itemsCount;
     private int distinctItemsCount;
-    private Node head;
-    private Node tail;
-    private LinkedListIterator iterator;
+    private ArrayList<ShoppingItem> list = new ArrayList<>();
     public ShoppingCart(ShoppingItemCatalog catalog){
         this.catalog = catalog;
-        this.iterator = new LinkedListIterator(head);
-        head = null;
-        tail = null;
         itemsCount = 0;
         distinctItemsCount = 0;
     }
 
-    @Override
     public void add(String code) throws ItemNotFoundException {
         ShoppingItem item = catalog.getItem(code);
         if(item == null){
-            throw new ItemNotFoundException();
+            String message = "Item with code "+code+" not found";
+            throw new ItemNotFoundException(message);
         }
-        Node nuevo = new Node();
-        nuevo.item = item;
-        nuevo.previous = this.tail;
-        if (this.head == null) {
-            this.head = nuevo;
-        } else {
-            this.tail.next = nuevo;
-        }
-        this.tail = nuevo;
+        list.add(itemsCount, item);
         itemsCount++;
 
     }
 
-    @Override
     public int getTotalCostInCents() {
-        int cost = 0;
-        LinkedListIterator iterator = new LinkedListIterator(head);
-        while(iterator.hasNext()){
-            ShoppingItem item = iterator.next();
+        int cont=0, cost = 0;
+        while(cont<itemsCount){
+            ShoppingItem item = list.get(cont);
             cost += item.getUnitCostInCents();
+            cont++;
         }
         return cost;
     }
 
-    @Override
     public int getDistinctItemsCount() {
+        int contItem, limit = 1;
+        ArrayList<ShoppingItem> auxArray = new ArrayList<>();
+        ShoppingItem auxItem = list.get(0);
+        auxArray.add(auxItem);
+        for(contItem = 0; contItem<itemsCount; contItem++) {
+            for (int contFor=0;contFor<limit;contFor++) {
+                System.out.println(auxArray.get(contFor).getCode()+"=="+auxItem.getCode());
+                if ((auxArray.get(contFor).getCode().equals(auxItem.getCode()))==false) {
+                    System.out.println(auxArray.get(contFor).getCode()+"!="+auxItem.getCode());
+                    auxArray.add(auxItem);
+                    limit++;
+                    distinctItemsCount++;
+                }
+            }
+            auxItem = list.get(contItem);
+        }
         return distinctItemsCount;
     }
 
-    @Override
-    public int getTotalItemsCOunt() {
+    public int getTotalItemsCount() {
         return itemsCount;
     }
 
-    @Override
     public java.util.List<ShoppingItem> getItems() {
-        LinkedListIterator iterator = new LinkedListIterator(head);
-        java.util.List<ShoppingItem> itemsList = new LinkedList<>();
-        while(iterator.hasNext()){
-            ShoppingItem aux = iterator.next();
-            itemsList.add(aux);
+        return list;
+    }
+
+    public java.util.List<ShoppingItem> getDistinctItems() {
+        int limit = 1;
+        ArrayList<ShoppingItem> auxArray = new ArrayList<>();
+        ShoppingItem auxItem = list.get(0);
+        auxArray.add(auxItem);
+        for(int contItem = 0; contItem<itemsCount; contItem++) {
+            for (int contFor=0;contFor<limit;contFor++) {
+                if ((auxArray.get(contFor).getCode().equals(auxItem.getCode()))==false) {
+                    auxArray.add(auxItem);
+                    limit++;
+                }
+            }
+            auxItem = list.get(contItem);
         }
-        return itemsList;
+        return auxArray;
     }
 }
+
+/// Cambios realizados: Uso de ArrayList de java.util, e implementación de getDistinctItemsCount() y getDistinctItems()

@@ -2,10 +2,10 @@ package edu.uaslp.objetos.shoppingcart;
 
 public final class ShoppingItem {
 
-    private final String name;
-    private final String description;
-    private final String code;
-    private final int unitCostInCents;
+    private String name;
+    private String description;
+    private String code;
+    private int unitCostInCents;
 
     ShoppingItem(String name, String description, String code, int unitCostInCents) {
         this.name = name;
@@ -34,5 +34,4 @@ public final class ShoppingItem {
     public double getUnitCostInPesos() {
         return unitCostInCents / 100.0;
     }
-
 }

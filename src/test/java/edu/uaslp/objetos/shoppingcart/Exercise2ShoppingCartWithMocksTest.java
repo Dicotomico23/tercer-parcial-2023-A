@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import java.util.List;
 
 import edu.uaslp.objetos.shoppingcart.exceptions.ItemNotFoundException;
+import edu.uaslp.objetos.shoppingcart.exceptions.ShoppingCartException;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

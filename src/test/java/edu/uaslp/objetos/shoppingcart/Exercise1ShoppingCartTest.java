@@ -35,7 +35,7 @@ public class Exercise1ShoppingCartTest {
     }
 
     @Test
-    public void givenShoppingCartWithItems_whenAnItemIsAdded_thenSizeIncreases() {
+    public void givenShoppingCartWithItems_whenAnItemIsAdded_thenSizeIncreases() { // Solo me faltaba implementar la DistinctItemsCount()
         // Given:
         ShoppingCart shoppingCart = new ShoppingCart(shoppingItemCatalog);
         ShoppingItem item1 = shoppingItemCatalog.getItem("ABC4000");

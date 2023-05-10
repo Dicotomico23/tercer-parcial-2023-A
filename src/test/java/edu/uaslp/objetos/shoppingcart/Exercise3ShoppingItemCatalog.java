@@ -9,12 +9,12 @@ public class Exercise3ShoppingItemCatalog {
         //Initialization
         ShoppingItemCatalog shoppingItemCatalog = new ShoppingItemCatalog();
         ShoppingCart shoppingCart = new ShoppingCart(shoppingItemCatalog);
-        String code = "ABC";
+        String code = "ABC1000";
         int size = 0;
         //Execution
         shoppingCart.add(code);
-        size = shoppingCart.getTotalItemsCOunt();
-        ShoppingItem item = shoppingItemCatalog.getItem("ABC");
+        size = shoppingCart.getTotalItemsCount();
+        ShoppingItem item = shoppingItemCatalog.getItem("ABC1000");
         //Validation
         Assertions.assertEquals(code,item.getCode());
         Assertions.assertEquals(1,size);
@@ -25,7 +25,7 @@ public class Exercise3ShoppingItemCatalog {
         //Initialization
         ShoppingItemCatalog shoppingItemCatalog = new ShoppingItemCatalog();
         ShoppingCart shoppingCart = new ShoppingCart(shoppingItemCatalog);
-        String code = "ABC";
+        String code = "ABC1000";
         //Execution
         shoppingCart.add(code);
         ShoppingItem item = shoppingItemCatalog.getItem("invalid_Code");
