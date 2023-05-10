@@ -14,7 +14,6 @@ public class ShoppingCart{
     }
 
     public void add(String code) throws ItemNotFoundException {
-        itemsCount=0;
         ShoppingItem item = catalog.getItem(code);
         if(item == null){
             String message = "Item with code "+code+" not found";
@@ -37,11 +36,8 @@ public class ShoppingCart{
 
     public int getDistinctItemsCount() {
         distinctItemsCount=0;
-        for(int cont=0;cont<itemsCount;cont++){
-            if(itemIsPresent(list.get(cont))){
-                distinctItemsCount++;
-            }
-        }
+        ArrayList<ShoppingItem> distinctArray = (ArrayList<ShoppingItem>) getDistinctItems();
+        distinctItemsCount = distinctArray.size();
         return distinctItemsCount;
     }
 
@@ -53,21 +49,30 @@ public class ShoppingCart{
         return list;
     }
 
-    public boolean itemIsPresent(ShoppingItem item){
-        for(int cont=0;cont<itemsCount;cont++){
-            if(list.get(cont).getCode().equals(item.getCode())){return true;}
+    public boolean itemIsRepeated(ShoppingItem item, ArrayList<ShoppingItem> array){
+        int contRepeat=0;
+        for(int cont=0;cont<array.size()-1;cont++){
+            if(array.get(cont).getCode().equals(item.getCode())){contRepeat++;}
         }
-        return false;
+        if(contRepeat>=1){return true;}
+        else{return false;}
     }
 
     public java.util.List<ShoppingItem> getDistinctItems() {
         ArrayList<ShoppingItem> distinctArray = new ArrayList<>();
-        for(int cont=0;cont<itemsCount;cont++){
-            if(itemIsPresent(list.get(cont))){
-                distinctArray.add(list.get(cont));
+        distinctArray.addAll(list);
+        for(int cont=0;cont<list.size();cont++){
+            if(itemIsRepeated(list.get(cont), distinctArray)){
+                distinctArray.remove(cont);
             }
         }
         return distinctArray;
+    }
+
+    public void printArray(ArrayList<ShoppingItem> array){
+        for(int cont=0;cont<array.size();cont++){
+            System.out.print(array.get(cont).getCode()+"-->");
+        }
     }
 }
 
